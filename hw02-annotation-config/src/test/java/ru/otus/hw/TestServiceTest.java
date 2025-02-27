@@ -17,7 +17,7 @@ import ru.otus.hw.service.TestServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TestServiceTest {
@@ -44,10 +44,11 @@ public class TestServiceTest {
         Student student = new Student("Vasj", "Pupkin");
 
         when(questionDao.findAll()).thenReturn(questions);
-        when(ioService.readIntForRangeWithPrompt(1, 2, "Your answer? Please, input the number:",
-                "Invalid number! Input again!")).thenReturn(1);
+        when(ioService.readIntForRangeWithPrompt(anyInt(),  anyInt(), anyString(), anyString())).thenReturn(1);
         TestResult testResult = testService.executeTestFor(student);
 
         Assertions.assertTrue( 1 == testResult.getRightAnswersCount());
+        verify(ioService, times(1)).readIntForRangeWithPrompt(1, 2, "Your answer? Please, input the number:",
+                "Invalid number! Input again!");
     }
 }

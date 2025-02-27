@@ -1,21 +1,19 @@
 package ru.otus.hw;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import ru.otus.hw.dao.QuestionDao;
+import ru.otus.hw.config.AppProperties;
+import ru.otus.hw.dao.CsvQuestionDao;
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
-@ExtendWith(DaoParameterResolver.class)
-public class QuestionDaoIntegrationTest {
+public class QuestionDaoTest {
 
-    private final QuestionDao questionDao;
+    private final CsvQuestionDao questionDao = new CsvQuestionDao(
+            new AppProperties(1, "test_questions.csv"));
 
     @Test
     void testMethod_findAll() {
@@ -23,7 +21,7 @@ public class QuestionDaoIntegrationTest {
         List<Question> questions =  questionDao.findAll();
         Assertions.assertNotNull(questions);
         Assertions.assertFalse(questions.isEmpty());
-        Assertions.assertEquals(5, questions.size());
+        Assertions.assertEquals(1, questions.size());
 
         List<Answer> answers = new ArrayList<>();
         answers.add(new Answer("To be", true));
