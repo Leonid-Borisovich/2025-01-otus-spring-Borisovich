@@ -34,4 +34,7 @@ dependency-reduced-pom.xml
 *.iml
 *.ipr
 
+.gitignore
+*/target/*
+
 
