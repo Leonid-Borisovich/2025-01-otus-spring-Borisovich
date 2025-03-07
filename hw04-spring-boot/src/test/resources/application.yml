@@ -1,0 +1,10 @@
+test:
+    rightAnswersCountToPass: 1
+    testFileName: test_questions.csv
+
+spring:
+    shell:
+        interactive:
+            enabled: false
+    script:
+        enabled: false
