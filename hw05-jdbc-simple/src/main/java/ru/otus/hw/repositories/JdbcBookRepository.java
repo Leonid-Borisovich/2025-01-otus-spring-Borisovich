@@ -106,7 +106,7 @@ public class JdbcBookRepository implements BookRepository {
                         "genre_id", genreId
                 ));
         if (res == 0) {
-            throw new EntityNotFoundException("Can`t  insert book!");
+            throw new EntityNotFoundException("Can`t  update book!");
         }
         if (res > 1) {
             throw new IllegalStateException("Not unique id = " + book.getId());

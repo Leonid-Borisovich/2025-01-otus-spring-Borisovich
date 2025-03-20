@@ -8,14 +8,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DataIntegrityViolationException;
+import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Genre;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DisplayName("Репозиторий на основе Jdbc для работы с книгами ")
 @JdbcTest
@@ -100,6 +105,43 @@ class JdbcBookRepositoryTest {
         assertThat(repositoryJdbc.findById(1L)).isPresent();
         repositoryJdbc.deleteById(1L);
         assertThat(repositoryJdbc.findById(1L)).isEmpty();
+    }
+
+    @DisplayName("должен вызывать исключение при попытке удалить несуществующую книгу по id ")
+    @Test
+    void shouldThrowExceptionByDeleting() {
+        assertThat(repositoryJdbc.findById(0L)).isNotPresent();
+        assertThrows(EntityNotFoundException.class, () -> {
+            repositoryJdbc.deleteById(0L);
+        });
+    }
+
+    @DisplayName("должен вызывать исключение, если не удалось сохранить книгу c несуществующим Ид")
+    @Test
+    void shouldThrowEntityNotFoundException() {
+
+        var book = new Book(10L, "BookTitle_10500", dbAuthors.get(2), dbGenres.get(2));
+
+        Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+            repositoryJdbc.save(book);
+        });
+        assertEquals("Can`t  update book!", exception.getMessage());
+    }
+
+    @DisplayName("должен вызывать исключение  ViolationException при попытке сохранить некорректные связи")
+    @Test
+    void shouldThrowViolationException() {
+        Optional<Book> bookOpt = repositoryJdbc.findById(1L);
+        assertThat(bookOpt.get()).isNotNull();
+
+        var author = new Author(10L, "xxx");
+
+        Book book = bookOpt.get();
+        book.setAuthor(author);
+
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            repositoryJdbc.save(book);
+        });
     }
 
     private static List<Author> getDbAuthors() {
