@@ -23,12 +23,12 @@ public class Book {
     private String title;
 
     @EqualsAndHashCode.Exclude
-    @ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY) // TODO , cascade = CascadeType.ALL
+    @ManyToOne(targetEntity = Author.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
 
     @EqualsAndHashCode.Exclude
-    @ManyToOne(targetEntity = Genre.class, fetch = FetchType.LAZY) // TODO ALL ?
+    @ManyToOne(targetEntity = Genre.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
