@@ -19,7 +19,6 @@ import ru.otus.hw.repositories.AuthorRepository;
 import ru.otus.hw.repositories.BookRepository;
 import ru.otus.hw.repositories.CommentRepository;
 import ru.otus.hw.repositories.GenreRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,7 +80,7 @@ class JpaBookServiceTest {
     @MethodSource("getDtoBooks")
     void shouldReturnCorrectBookById(ru.otus.hw.dto.Book expectedBook) {
         IntStream.range(1, 4).boxed().forEach(id -> {
-            when(bookRepository.findById(id)).thenReturn(Optional.of(dbBooks.get(id-1)));
+            when(bookRepository.findById(id.longValue())).thenReturn(Optional.of(dbBooks.get(id-1)));
         } );
 
         var actualBook = bookService.findById(expectedBook.getId());

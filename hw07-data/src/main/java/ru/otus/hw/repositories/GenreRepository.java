@@ -1,15 +1,8 @@
 package ru.otus.hw.repositories;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.ListCrudRepository;
-import ru.otus.hw.models.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.hw.models.Genre;
 
-import java.util.List;
-import java.util.Optional;
 
-public interface GenreRepository extends ListCrudRepository<Genre, Long> {
-    List<Genre> findAll();
-
-    Optional<Genre> findById(long id);
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 }
