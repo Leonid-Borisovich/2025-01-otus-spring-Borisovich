@@ -1,6 +1,7 @@
 package ru.otus.hw.repositories;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,18 @@ public class JpaBookRepository implements BookRepository {
 
     @Override
     public Optional<Book> findById(long id) {
-        return Optional.ofNullable(em.find(Book.class, id));
+        TypedQuery<Book> query = em.createQuery(
+                "select b from Book b " +
+                        "left join fetch b.genre " +
+                        "left join fetch b.comments " +
+                        "left join fetch b.author " +
+                "where b.id= :id", Book.class);
+        query.setParameter("id", id);
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
