@@ -46,11 +46,11 @@
     <tr th:each="book : ${books}" th:object="${book}">
         <td th:text="*{id}">1</td>
         <td th:text="*{title}">Red and White</td>
-        <td th:text="*{author.fullName}">Agata Cristi</td>
-        <td th:text="*{genre.name}">Crime</td>
+        <td th:text="*{authorDto.fullName}">Agata Cristi</td>
+        <td th:text="*{genreDto.name}">Crime</td>
         <td>
             <table>
-                <tr th:each="comment : *{comments}" th:object="${comment}">
+                <tr th:each="comment : *{commentDtos}" th:object="${comment}">
                     <td th:text="*{text}">One, two, three</td>
                 </tr>
             </table>

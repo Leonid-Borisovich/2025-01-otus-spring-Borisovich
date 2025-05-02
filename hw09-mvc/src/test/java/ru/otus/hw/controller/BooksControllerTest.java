@@ -6,15 +6,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.converters.BookConverter;
-import ru.otus.hw.converters.CommentConverter;
-import ru.otus.hw.dto.Author;
-import ru.otus.hw.dto.Book;
-import ru.otus.hw.dto.Comment;
-import ru.otus.hw.dto.Genre;
+import ru.otus.hw.dto.AurhorDto;
+import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.dto.CommentDto;
+import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.exceptions.EntityNotFoundException;
-import ru.otus.hw.repositories.AuthorRepository;
-import ru.otus.hw.repositories.BookRepository;
-import ru.otus.hw.repositories.GenreRepository;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
 import ru.otus.hw.services.CommentService;
@@ -49,21 +45,21 @@ class BooksControllerTest {
     private CommentService commentService;
 
 
-    private List<Book> books = List.of(new Book(1, "War and Peace", new Author(), new Genre(), new ArrayList<Comment>()));
-    private List<Author> testAuthors = List.of(new Author(1, "Lev Tolstoj"));
-    private List<Genre> testGenres = new ArrayList<>();
+    private List<BookDto> bookDtos = List.of(new BookDto(1, "War and Peace", new AurhorDto(), new GenreDto(), new ArrayList<CommentDto>()));
+    private List<AurhorDto> testAuthors = List.of(new AurhorDto(1, "Lev Tolstoj"));
+    private List<GenreDto> testGenreDtos = new ArrayList<>();
 
       @Test
     void shouldRenderListPageWithCorrectViewAndModelAttributes() throws Exception {
-        when(bookService.findAll()).thenReturn(books);
+        when(bookService.findAll()).thenReturn(bookDtos);
         mvc.perform(get("/"))
                 .andExpect(view().name("list"))
-                .andExpect(model().attribute("books", books));
+                .andExpect(model().attribute("books", bookDtos));
     }
 
     @Test
     void shouldRenderEditPageWithCorrectViewAndModelAttributes() throws Exception {
-        Book expectedBookDto = books.get(0);
+        BookDto expectedBookDto = bookDtos.get(0);
         when(bookService.findById(1L)).thenReturn(Optional.of(expectedBookDto));
 
         mvc.perform(get("/edit").param("id", "1"))
@@ -80,7 +76,7 @@ class BooksControllerTest {
 
     @Test
     void shouldSaveBookAndRedirectToContextPath() throws Exception {
-        Book expectedBookDto = books.get(0);
+        BookDto expectedBookDto = bookDtos.get(0);
         when(bookService.findById(1L)).thenReturn(Optional.of(expectedBookDto));
         mvc.perform(post("/add")
                         .param("title", "Anna K.")
@@ -93,13 +89,13 @@ class BooksControllerTest {
 
     @Test
     void shouldRenderAddBook() throws Exception {
-        Book expectedBookDto = books.get(0);
+        BookDto expectedBookDto = bookDtos.get(0);
         when(bookService.findById(1L)).thenReturn(Optional.of(expectedBookDto));
         when(authorService.findAll()).thenReturn(testAuthors);
         mvc.perform(get("/add"))
                 .andExpect(view().name("add"))
                 .andExpect(model().attribute("authors", testAuthors))
-                .andExpect(model().attribute("genres", testGenres));
+                .andExpect(model().attribute("genres", testGenreDtos));
     }
 
 }

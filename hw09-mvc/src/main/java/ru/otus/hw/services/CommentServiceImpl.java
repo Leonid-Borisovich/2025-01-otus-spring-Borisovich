@@ -3,28 +3,24 @@ package ru.otus.hw.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.hw.converters.CommentConverter;
+import ru.otus.hw.dto.CommentDto;
 import ru.otus.hw.models.Comment;
 import ru.otus.hw.repositories.CommentRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
+    private final CommentConverter commentConverter;
 
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Comment> findById(long id) {
-        return commentRepository.findById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Comment> findAllForBook(long bookId) {
-        return commentRepository.findAllByBookId(bookId);
+    public List<CommentDto> findAllForBook(long bookId) {
+        return commentConverter.modelToDto(commentRepository.findAllByBookId(bookId));
     }
 
     @Override
@@ -52,9 +48,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public List<Comment> setAll(long bookId, List<String> comments){
-        commentRepository.deleteAll();
+    public void setAll(long bookId, List<String> comments){
+        List<Comment> oldCommentList = commentRepository.findAllByBookId(bookId);
+        commentRepository.deleteAll(oldCommentList);
         comments.stream().map(t -> new Comment(t, bookId)).forEach(t ->commentRepository.save(t));
-        return findAllForBook(bookId);
     }
 }

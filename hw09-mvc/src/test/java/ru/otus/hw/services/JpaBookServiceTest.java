@@ -10,7 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import ru.otus.hw.dto.AurhorDto;
+import ru.otus.hw.dto.BookDto;
 import ru.otus.hw.dto.DtoData;
+import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
@@ -53,11 +56,11 @@ class JpaBookServiceTest {
 
     private List<Book> dbBooks;
 
-    private List<ru.otus.hw.dto.Author> dtoAuthors;
+    private List<AurhorDto> dtoAuthors;
 
-    private List<ru.otus.hw.dto.Genre> dtoGenres;
+    private List<GenreDto> dtoGenres;
 
-    private List<ru.otus.hw.dto.Book> dtoBooks;
+    private List<BookDto> dtoBooks;
 
 
     @BeforeEach
@@ -78,13 +81,13 @@ class JpaBookServiceTest {
     @DisplayName("должен загружать книгу по id")
     @ParameterizedTest
     @MethodSource("getDtoBooks")
-    void shouldReturnCorrectBookById(ru.otus.hw.dto.Book expectedBook) {
+    void shouldReturnCorrectBookById(BookDto expectedBookDto) {
         IntStream.range(1, 4).boxed().forEach(id -> {
             when(bookRepository.findById(id.longValue())).thenReturn(Optional.of(dbBooks.get(id-1)));
         } );
 
-        var actualBook = bookService.findById(expectedBook.getId());
-        assertThat(actualBook).isPresent().get().isEqualTo(expectedBook);
+        var actualBook = bookService.findById(expectedBookDto.getId());
+        assertThat(actualBook).isPresent().get().isEqualTo(expectedBookDto);
     }
 
     @DisplayName("должен загружать список всех книг")
@@ -92,10 +95,10 @@ class JpaBookServiceTest {
     void shouldReturnCorrectBooksList() {
         when(bookRepository.findAll()).thenReturn(dbBooks);
         var actualBooks = bookService.findAll();
-        List<ru.otus.hw.dto.Book> expectedBooks = dtoBooks;
+        List<BookDto> expectedBookDtos = dtoBooks;
 
         assertThat(actualBooks).containsExactlyElementsOf(
-                expectedBooks.stream()
+                expectedBookDtos.stream()
                         .collect(Collectors.toList()));
         actualBooks.forEach(System.out::println);
     }
@@ -144,7 +147,7 @@ class JpaBookServiceTest {
                 .toList();
     }
 
-    private static List<ru.otus.hw.dto.Book> getDtoBooks(){
+    private static List<BookDto> getDtoBooks(){
         return DtoData.getDtoBooks();
     }
 }

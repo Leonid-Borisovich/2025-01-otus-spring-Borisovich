@@ -13,34 +13,34 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Book {
+public class BookDto {
     private long id;
 
     private String title;
 
     @EqualsAndHashCode.Exclude
-    private Author author;
+    private AurhorDto authorDto;
 
     @EqualsAndHashCode.Exclude
-    private Genre genre;
+    private GenreDto genreDto;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Comment> comments;
+    private List<CommentDto> commentDtos;
 
-    public Book(long id, String title, Author author, Genre genre) {
+    public BookDto(long id, String title, AurhorDto authorDto, GenreDto genreDto) {
         this.id = id;
         this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.comments = new ArrayList<>();
+        this.authorDto = authorDto;
+        this.genreDto = genreDto;
+        this.commentDtos = new ArrayList<>();
     }
 
     public String commentsAsString() {
-        if (isEmpty(comments)){
+        if (isEmpty(commentDtos)){
             return "";
         }
-        return String.join(", ", comments.stream().map(t -> t.getText()).collect(Collectors.toList()));
+        return String.join(", ", commentDtos.stream().map(t -> t.getText()).collect(Collectors.toList()));
     }
 
 }

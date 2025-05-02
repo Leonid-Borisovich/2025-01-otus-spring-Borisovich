@@ -6,12 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.otus.hw.converters.BookConverter;
-import ru.otus.hw.converters.CommentConverter;
-import ru.otus.hw.dto.Genre;
+import ru.otus.hw.dto.CommentDto;
+import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.exceptions.EntityNotFoundException;
-import ru.otus.hw.dto.Book;
-import ru.otus.hw.dto.Author;
+import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.dto.AurhorDto;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
 import ru.otus.hw.services.CommentService;
@@ -34,21 +33,21 @@ public class BooksController {
 
     @GetMapping("/")
     public String listPage(Model model) {
-        List<Book> books = bookService.findAll().stream()
+        List<BookDto> bookDtos = bookService.findAll().stream()
                 .collect(Collectors.toList());
-        model.addAttribute("books", books);
+        model.addAttribute("books", bookDtos);
         return "list";
     }
 
     @GetMapping("/edit")
     public String editPage(@RequestParam("id") long id, Model model) {
-        Book book = bookService.findById(id).orElseThrow(EntityNotFoundException::new);
-        model.addAttribute("book", book);
-        List<Author> authors = authorService.findAll().stream().collect(Collectors.toList());
+        BookDto bookDto = bookService.findById(id).orElseThrow(EntityNotFoundException::new);
+        model.addAttribute("book", bookDto);
+        List<AurhorDto> authors = authorService.findAll();
         model.addAttribute("authors", authors);
-        List<Genre> genres = genreService.findAll().stream().collect(Collectors.toList());
-        model.addAttribute("genres", genres);
-        List<ru.otus.hw.models.Comment> comments = commentService.findAllForBook(id).stream().collect(Collectors.toList());
+        List<GenreDto> genreDtos = genreService.findAll();
+        model.addAttribute("genres", genreDtos);
+        List<CommentDto> comments = commentService.findAllForBook(id);
 
         String commentJoin = comments.stream().map(c -> c.getText()).collect(Collectors.joining("\n"));
         model.addAttribute("comments", commentJoin);
@@ -56,30 +55,30 @@ public class BooksController {
     }
 
     @PostMapping("/edit")
-    public String savePerson(Book book,
+    public String savePerson(BookDto bookDto,
                              @RequestParam(value = "authorId") Long authorId,
                              @RequestParam(value = "genreId") Long genreId,
                              String rawText
     ) {
-        bookService.update(book.getId(), book.getTitle(), authorId, genreId);
+        bookService.update(bookDto.getId(), bookDto.getTitle(), authorId, genreId);
         List<String> updatedComments = new ArrayList<>(Arrays.asList(rawText.split("\n")));
-        commentService.setAll(book.getId(), updatedComments);
+        commentService.setAll(bookDto.getId(), updatedComments);
         return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String deleteBook(@RequestParam("id") long id, Model model) {
-        Book book = bookService.findById(id).orElseThrow(EntityNotFoundException::new);
+        bookService.findById(id).orElseThrow(EntityNotFoundException::new);
         bookService.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/add")
     public String addPage(Model model) {
-        List<Author> authors = authorService.findAll().stream().collect(Collectors.toList());
+        List<AurhorDto> authors = authorService.findAll();
         model.addAttribute("authors", authors);
-        List<Genre> genres = genreService.findAll().stream().collect(Collectors.toList());
-        model.addAttribute("genres", genres);
+        List<GenreDto> genreDtos = genreService.findAll();
+        model.addAttribute("genres", genreDtos);
         return "add";
     }
 
