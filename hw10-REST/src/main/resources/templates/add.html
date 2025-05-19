@@ -46,12 +46,15 @@
         <label for="genre-combo">Genre:</label>
         <select id="genre-combo" name="genreId">
             <option th:each="genre : ${genres}"
-                      th:value="${genre.id}"
-                      th:text="${genre.name}"
+                    th:value="${genre.id}"
+                    th:text="${genre.name}"
             </option>
         </select>
     </div>
-
+    <div class="row">
+        <label for="rawCommentsTextId">A lot of comments:</label>
+        <textarea id="rawCommentsTextId" rows="10" cols="50" name="rawCommentsText" th:text="${comments}"></textarea><br/>
+    </div>
 
     <div class="row">
         <button type="button" onclick="addBook()" >Сохранить</button>
@@ -66,7 +69,8 @@
         const title = document.getElementById("book-name-input")
         const authorId = document.getElementById("author-combo")
         const genreId = document.getElementById("genre-combo")
-        const newbook = { title: title.value, authorId: authorId.value, genreId:genreId.value}
+        const commentsId = document.getElementById("rawCommentsTextId")
+        const newbook = { title: title.value, authorId: authorId.value, genreId:genreId.value, rawCommentsText: commentsId.value}
 
         fetch("api/v1/book/", {
             method: 'POST',

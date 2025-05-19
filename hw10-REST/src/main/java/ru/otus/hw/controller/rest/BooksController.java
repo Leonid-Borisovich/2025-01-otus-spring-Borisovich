@@ -27,9 +27,6 @@ public class BooksController {
     public List<BookDto> listPage() {
         List<BookDto> bookDtos = bookService.findAll().stream()
                 .collect(Collectors.toList());
-        if (bookDtos.isEmpty()) {
-            throw new EntityNotFoundException("Books not found!");
-        }
         return bookDtos;
     }
 
@@ -51,13 +48,15 @@ public class BooksController {
                              @PathVariable(value = "id", required = true) long id,
                              @Valid
                              @RequestBody
-                             JSBookDto jsBookDto,
-                             String rawText
+                             JSBookDto jsBookDto
     ) {
         BookDto bookUpdated = bookService.update(id, jsBookDto.getTitle(), jsBookDto.getAuthorId(), jsBookDto.getGenreId());
-        List<String> updatedComments = new ArrayList<>(Arrays.asList(rawText.split("\n")));
+
+        List<String> updatedComments = jsBookDto.getRawCommentsText() == null ?
+                new ArrayList() :
+                new ArrayList<>(Arrays.asList(jsBookDto.getRawCommentsText().split("\n")));
         commentService.setAll(id, updatedComments);
-        return bookUpdated;
+        return bookService.findById(bookUpdated.getId()).orElse(null);
 
     }
 
@@ -65,9 +64,14 @@ public class BooksController {
     public BookDto addNewBook(
             @Valid
             @RequestBody
-            JSBookDto JSBookDto) {
-        BookDto newbook = bookService.insert(JSBookDto.getTitle(), JSBookDto.getAuthorId(), JSBookDto.getGenreId());
-        return newbook;
+            JSBookDto jsBookDto) {
+        BookDto newbook = bookService.insert(jsBookDto.getTitle(), jsBookDto.getAuthorId(), jsBookDto.getGenreId());
+        List<String> updatedComments = jsBookDto.getRawCommentsText() == null ?
+                new ArrayList() :
+                new ArrayList<>(Arrays.asList(jsBookDto.getRawCommentsText().split("\n")));
+        Long newBookId = newbook.getId();
+        commentService.setAll(newBookId, updatedComments);
+        return bookService.findById(newBookId).orElse(null);
     }
 
 }

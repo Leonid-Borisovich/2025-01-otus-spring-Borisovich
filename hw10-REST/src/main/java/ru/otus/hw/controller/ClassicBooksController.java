@@ -55,13 +55,13 @@ public class ClassicBooksController {
     }
 
     @PostMapping("/edit")
-    public String savePerson(BookDto bookDto,
+    public String saveBook(BookDto bookDto,
                              @RequestParam(value = "authorId") Long authorId,
                              @RequestParam(value = "genreId") Long genreId,
-                             String rawText
+                             String rawCommentsText
     ) {
         bookService.update(bookDto.getId(), bookDto.getTitle(), authorId, genreId);
-        List<String> updatedComments = new ArrayList<>(Arrays.asList(rawText.split("\n")));
+        List<String> updatedComments = new ArrayList<>(Arrays.asList(rawCommentsText.split("\n")));
         commentService.setAll(bookDto.getId(), updatedComments);
         return "redirect:/";
     }

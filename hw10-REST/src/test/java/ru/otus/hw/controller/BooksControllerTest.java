@@ -52,6 +52,8 @@ class BooksControllerTest {
         BookDto expectedBookDto = bookDtos.get(0);
         JSBookDto jsBookDto = new JSBookDto(null,"DemoTitle", 1L, 1L);
         when(bookService.insert("DemoTitle", 1L, 1L)).thenReturn(expectedBookDto);
+        when(bookService.findById(1L)).thenReturn(Optional.of(expectedBookDto));
+
 
         mvc.perform(post("/api/v1/book/")
                         .contentType(APPLICATION_JSON)
