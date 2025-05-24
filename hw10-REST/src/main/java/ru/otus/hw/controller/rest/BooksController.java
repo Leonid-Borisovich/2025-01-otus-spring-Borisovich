@@ -25,8 +25,7 @@ public class BooksController {
 
     @GetMapping("/api/v1/book/")
     public List<BookDto> listPage() {
-        List<BookDto> bookDtos = bookService.findAll().stream()
-                .collect(Collectors.toList());
+        List<BookDto> bookDtos = bookService.findAll();
         return bookDtos;
     }
 
