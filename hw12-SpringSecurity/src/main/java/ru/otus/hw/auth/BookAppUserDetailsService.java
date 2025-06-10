@@ -28,8 +28,6 @@ public class BookAppUserDetailsService implements UserDetailsService {
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                //"{noop}" +
-                //"{$2a$}" +
                 user.getPassword(),
                 authorities);
     }
