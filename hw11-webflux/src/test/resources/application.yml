@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      port: 0 # when flapdoodle using
+      host: localhost
+      database: books
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 4.0.2
+
+mongock:
+  enabled: false
+
+logging:
+  level:
+    ROOT: INFO
