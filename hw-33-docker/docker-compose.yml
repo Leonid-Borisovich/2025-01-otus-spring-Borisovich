@@ -1,0 +1,25 @@
+services:
+  demo-book-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    # Эти свойства перегружают соответствующие в application.yml
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-books:5432/booksdb
+      - SPRING_DATASOURCE_USERNAME=book_user
+      - SPRING_DATASOURCE_PASSWORD=pwd
+    depends_on:
+      - postgres-books
+
+  postgres-books:
+    image: "postgres:16"
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=book_user
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=booksdb
+
+
