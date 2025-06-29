@@ -1,0 +1,1 @@
+docker run --rm --name tmp-book-pg-docker -e POSTGRES_PASSWORD=pwd -e POSTGRES_USER=book_user -e POSTGRES_DB=booksdb -p 5433:5432 postgres:16
