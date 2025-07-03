@@ -1,0 +1,40 @@
+server:
+  port: 81
+
+resilience4j:
+  retry:
+    configs:
+      demoBreaker:
+            maxAttempts: 3
+            waitDuration: 1000ms
+
+  circuitbreaker:
+    instances:
+      demoBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10 # размер окна сбора статистики ошибок
+        minimumNumberOfCalls: 3 # минимальное количество запросов для активации circuit breaker
+        failureRateThreshold: 50 # процент ошибок, при достижении которого срабатывает защита
+        waitDurationInOpenState: PT1S # интервал ожидания восстановления сервиса
+
+
+logging:
+  level:
+    ROOT: debug
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+        loggerLevel: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      show-details: always
