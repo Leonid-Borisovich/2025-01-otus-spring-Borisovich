@@ -4,14 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-//http://localhost:81/get-books/
+//http://localhost:8080
+//http://localhost:8080/edit?id=1
+//http://localhost:8080/edit?id=111
+// http://localhost:8080/api/v1/book/
 
 
 @SpringBootApplication
-public class BooksConsumerFeignApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BooksConsumerFeignApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
