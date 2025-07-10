@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all books</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h3>Books:</h3>
+
+<table class="books">
+    <thead>
+    <tr>
+        <th>Ид</th>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Жанр</th>
+        <th>Комментарии</th>
+        <th>Действия</th>
+        <th>Действия</th>
+        <th>
+            <a href="add.html" th:href="@{/add}">Добавить</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody id="booksContainer">
+    </tbody>
+</table>
+
+</body>
+<script>
+   loadBooks();
+
+    function loadBooks() {
+        const aContainer = document.getElementById("booksContainer")
+        fetch("api/v1/book/")
+            .then(rawResponse => rawResponse.json())
+            .then((books) => {
+                aContainer.innerHTML = '';
+                books.forEach(function (bookObj) {
+                    aContainer.insertAdjacentHTML('beforeend',`
+                    <tr>
+                        <td>${bookObj.id}</td>
+                        <td>${bookObj.title}</td>
+                        <td>${bookObj.authorDto.fullName}</td>
+                        <td>${bookObj.genreDto.name}</td>
+                        <td>${bookObj.commentDtos.map(t => t.text).join("<br><br>")}
+                        </td>
+                        <td>
+                            <a href="/edit/${bookObj.id}">Редактировать</a>
+                        </td>
+                        <td>
+                            <button type="button" onclick="deleteBook(${bookObj.id})" >Удалить</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                `)
+                })
+            });
+    }
+
+   function deleteBook(id){
+       fetch('api/v1/book/' + id, {
+           method: 'DELETE'
+       })
+           .then(response => {
+               if (!response.ok) {
+                   throw new Error(`HTTP error by deleting book! Status: ${response.status}`);
+               }
+               return response.text();
+           })
+           .then(result => console.log('Deleted:', result))
+           .then(result => loadBooks());
+   }
+</script>
+
+</html>
