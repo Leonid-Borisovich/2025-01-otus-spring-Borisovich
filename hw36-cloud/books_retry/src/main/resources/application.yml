@@ -17,10 +17,12 @@ spring:
 resilience4j:
   retry:
     configs:
+      default:
+        maxAttempts: 2
+        waitDuration: 1000ms
       demoBreaker:
-        maxAttempts: 5
-        waitDuration: 5000ms
-
+        maxAttempts: 4
+        waitDuration: 2000ms
   circuitbreaker:
     instances:
       demoBreaker:
@@ -35,13 +37,6 @@ logging:
   level:
     ROOT: warn
 
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 10000
-        readTimeout: 10000
-        loggerLevel: basic
 
 management:
   endpoints:

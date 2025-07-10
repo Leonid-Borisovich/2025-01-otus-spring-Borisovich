@@ -39,8 +39,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    //@Retry(name = "demoBreaker", fallbackMethod = "failsListPage")
-    @CircuitBreaker(name = "demoBreaker", fallbackMethod = "failsListPage")
+    @Retry(name = "demoBreaker", fallbackMethod = "failsListPage")
+    //@CircuitBreaker(name = "demoBreaker", fallbackMethod = "failsListPage")
     public List<BookDto> findAll() {
         // Для демонстрации @Retry - кидаем исключение
         throw new RuntimeException("Circuit Break!");
