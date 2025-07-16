@@ -1,0 +1,9 @@
+server:
+  port: 7081
+
+
+spring:
+
+logging:
+  level:
+    root: INFO
