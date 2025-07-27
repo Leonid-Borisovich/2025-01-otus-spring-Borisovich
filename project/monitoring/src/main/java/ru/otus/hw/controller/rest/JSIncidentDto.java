@@ -14,11 +14,15 @@ public class JSIncidentDto {
 
     private String description;
 
-    private Long deviceId;
+    private String deviceId;
 
-    private String rawActionsText;
+    private Long actionId;
 
-    public JSIncidentDto(Long id, String description, Long deviceId) {
+    private String actionText;
+
+    private Long actionTypeId;
+
+    public JSIncidentDto(Long id, String description, String deviceId) {
         this.id = id;
         this.description = description;
         this.deviceId = deviceId;

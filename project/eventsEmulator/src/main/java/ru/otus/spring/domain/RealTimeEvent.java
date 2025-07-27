@@ -7,17 +7,12 @@ import lombok.NoArgsConstructor;
 
 /**
  {
- "EventId" : "eb0bb455-b85f-4ac4-851f-f30a11797579",
- "Timestamp" : "19.10.2022 09:58:55",
- "BinaryTimestamp" : "5249703721781162729",
- "ZonedTimestamp" : "19.10.2022 09:58:55.377 +05:00",
- "EventDescription" : "Начало движения",
- "IsAlarmEvent" : "False",
- "ChannelId" : "e0391a80-c921-4ffc-9a69-107fcf28e34e",
- "ChannelName" : "Камера 3",
- "Comment" : "",
- "EventType" : "Info",
- "InitiatorName" : "System"
+ "eventId": "id_2",
+ "timestamp": "2025-07-27 15:04",
+ "eventDescription": "Пересечение периметра 2: 2025-07-27 15:04",
+ "channelId": "ID_Южные_ворота",
+ "channelName": "Южные ворота",
+ "comment": "Пересечение периметра на Южных воротах"
  }
  */
 

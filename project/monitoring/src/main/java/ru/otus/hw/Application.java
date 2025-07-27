@@ -10,10 +10,10 @@ localhost:8080
 localhost:8080/edit?id=1
 localhost:8080/add
 
-localhost:8080/actuator/health
+GET localhost:8080/actuator/health
 
-localhost/api/v1/incident/
-
+GET localhost:8080/api/v1/incident/
+PATCH localhost:8080/api/v1/incident/{id}
 
  */
 

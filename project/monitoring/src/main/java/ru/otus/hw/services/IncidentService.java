@@ -10,9 +10,9 @@ public interface IncidentService {
 
     List<IncidentDto> findAll();
 
-    IncidentDto insert(String title, long deviceId);
+    IncidentDto insert(String title, String deviceId);
 
-    IncidentDto update(long id, String description, long deviceId);
+    IncidentDto update(long id, String description, String deviceId);
 
     void deleteById(long id);
 }

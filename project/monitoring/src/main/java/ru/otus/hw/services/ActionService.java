@@ -1,7 +1,6 @@
 package ru.otus.hw.services;
 
 import ru.otus.hw.dto.ActionDto;
-import ru.otus.hw.models.Action;
 
 import java.util.List;
 
@@ -9,11 +8,10 @@ public interface ActionService {
 
     List<ActionDto> findAllForBook(long bookId);
 
-    Action insert(String text, long incidentId);
+    ActionDto insert(String text, long incidentId, long actionTypeId);
 
-    Action update(long id, String text, long incidentId);
+    ActionDto update(long id, String text, long incidentId, long actionTypeId);
 
     void deleteById(long id);
 
-    void setAll(long incidentId, List<String> actions);
 }

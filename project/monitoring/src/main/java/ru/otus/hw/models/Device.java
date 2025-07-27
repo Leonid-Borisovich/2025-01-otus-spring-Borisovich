@@ -13,9 +13,14 @@ import lombok.NoArgsConstructor;
 public class Device {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String fullName;
+    private Double latitude;
+    private Double longitude;
 
+    public Device(String id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
+    }
 }

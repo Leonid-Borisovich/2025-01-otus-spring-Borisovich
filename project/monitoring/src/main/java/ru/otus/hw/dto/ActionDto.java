@@ -15,6 +15,7 @@ public class ActionDto {
     private String whatDo;
 
     private long incidentId;
+    private String actionType;
 
     @Override
     public String toString(){

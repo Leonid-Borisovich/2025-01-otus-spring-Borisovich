@@ -10,6 +10,8 @@ import reactor.core.publisher.Flux;
 import ru.otus.spring.domain.RealTimeEvent;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * http://localhost:7081/emule/events
@@ -20,6 +22,9 @@ import java.time.Duration;
 @RestController
 public class EmulatorController {
     private static final Logger logger = LoggerFactory.getLogger(EmulatorController.class);
+
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @GetMapping(path = "/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<RealTimeEvent> genEvents() {
         logger.info("I write events");
@@ -32,15 +37,16 @@ public class EmulatorController {
                     }
                     return state;
                 })
-                .delayElements(Duration.ofSeconds(2L))
+                .delayElements(Duration.ofSeconds(10L))
                 .map(t ->  {
-
-                    RealTimeEvent e =  new RealTimeEvent("id" + t.toString(),
-                            "19.10.2022 09:58:55",
-                            "Пересечение периметра",
-                            "e0391a80-c921-4ffc-9a69-107fcf28e34e",
-                            "Камера 3",
-                            String.format("Пересечение периметра:%s", t)
+                    LocalDateTime nowDate = LocalDateTime.now();
+                    String now = FORMATTER.format(nowDate);
+                    RealTimeEvent e =  new RealTimeEvent("id_" + t.toString(),
+                            now,
+                            String.format("Пересечение периметра %s: %s", t, now),
+                            "ID_Южные_ворота",
+                            "Южные ворота",
+                            "Пересечение периметра на Южных воротах"
                     );
                     return e;
                 });

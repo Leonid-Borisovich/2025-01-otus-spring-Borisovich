@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EmulatorControllerTest {
 
     @LocalServerPort
-    private int port = 7081;
+    private int port = 7080;
 
     @Test
     void streamTest() {
@@ -38,12 +38,13 @@ class EmulatorControllerTest {
 
         //then
         assertThat(result).hasSize(expectedSize);
-//
-//                .contains("Пересечение периметра",
-//                        String.format("id%s", 1),
-//                        String.format("id%s", 2),
-//                        String.format("id%s", 3),
-//                        String.format("id%s", 4));
+        assertThat(result.stream().map(t -> t.getEventId())).contains(
+                String.format("id_%s", 0),
+                String.format("id_%s", 1),
+                String.format("id_%s", 2),
+                String.format("id_%s", 3),
+                String.format("id_%s", 4)
+        );
     }
 
 }

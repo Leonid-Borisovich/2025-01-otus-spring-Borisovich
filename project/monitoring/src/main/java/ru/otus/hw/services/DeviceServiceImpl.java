@@ -18,6 +18,13 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     @Transactional(readOnly = true)
+    public DeviceDto findById(String id) {
+        return DeviceRepository.findById(id).map(DeviceConverter::modelToDto).orElse(null);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
     public List<DeviceDto> findAll() {
         return DeviceRepository.findAll().stream().map(DeviceConverter::modelToDto).collect(Collectors.toList());
     }

@@ -41,14 +41,14 @@ public class IncidentServiceImpl implements IncidentService {
 
     @Override
     @Transactional
-    public IncidentDto insert(String description, long deviceId) {
+    public IncidentDto insert(String description, String deviceId) {
         Incident incident = save(0, description, deviceId);
         return incidentConverter.modelToDto(incident);
     }
 
     @Override
     @Transactional
-    public IncidentDto update(long id, String description, long deviceId) {
+    public IncidentDto update(long id, String description, String deviceId) {
         Incident incident = save(id, description, deviceId);
         return incidentConverter.modelToDto(incident);
     }
@@ -59,9 +59,9 @@ public class IncidentServiceImpl implements IncidentService {
         incidentRepository.deleteById(id);
     }
 
-    private Incident save(long id, String description, long deviceId) {
+    private Incident save(long id, String description, String deviceId) {
         var device = deviceRepository.findById(deviceId)
-                .orElseThrow(() -> new EntityNotFoundException("Device with id %d not found".formatted(deviceId)));
+                .orElseThrow(() -> new EntityNotFoundException("Device with id %s not found".formatted(deviceId)));
         var incident = new Incident(id, description, device);
         return incidentRepository.save(incident);
     }

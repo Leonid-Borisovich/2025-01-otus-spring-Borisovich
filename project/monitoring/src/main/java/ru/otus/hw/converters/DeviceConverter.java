@@ -10,7 +10,7 @@ import ru.otus.hw.models.Device;
 public class DeviceConverter {
 
     public DeviceDto modelToDto(Device device) {
-        return new DeviceDto(device.getId(), device.getFullName());
+        return new DeviceDto(device.getId(), device.getFullName(), device.getLatitude(), device.getLongitude());
     }
 
 

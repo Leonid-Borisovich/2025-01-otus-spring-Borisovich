@@ -1,3 +1,11 @@
+server:
+  port: 8080
+
+listen:
+  to:
+    host: http://localhost:7080
+    endpoint: /emule/events
+
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
@@ -21,11 +29,6 @@ spring:
       enabled: true
       path: /h2-console
 
-  data:
-    rest:
-      basePath: /hal
-
-
 management:
   endpoints:
     web:
@@ -40,8 +43,14 @@ management:
 
 logging:
   level:
-    ROOT: INFO
-  file:
-    name: incidentssApp.log
-    path: ./
+    ROOT: warn
+    org:
+      springframework:
+        web: info
+        security: DEBUG
+#  file:
+#    name: incidentsApp.log
+#    path: ./
+
+
 

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DeviceService {
     List<DeviceDto> findAll();
+    DeviceDto findById(String id);
 }

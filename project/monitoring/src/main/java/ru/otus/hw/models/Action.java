@@ -24,9 +24,14 @@ public class Action {
    @Column(name = "incident_id")
    private long incidentId;
 
-    public Action(String whatDo, long incidentId) {
+    @Column(name = "action_type_id")
+    private long actionTypeId;
+
+
+    public Action(String whatDo, long incidentId, long actionTypeId) {
         this.whatDo = whatDo;
         this.incidentId = incidentId;
+        this.actionTypeId = actionTypeId;
     }
 
     @Override
