@@ -1,4 +1,4 @@
-insert into devices(id, full_name,latitude, longitude)
+insert into devices(id, full_name, latitude, longitude)
 values ('ID_Южные_ворота', 'Южные ворота', 73.365, 50.412),
        ('ID_Северная_стена', 'Северная стена', 73.366, 50.413),
        ('ID_Подъемный_мост', 'Подъемный мост', 73.367, 50.414);

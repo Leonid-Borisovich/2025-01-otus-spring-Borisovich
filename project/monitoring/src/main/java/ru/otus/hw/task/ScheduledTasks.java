@@ -2,7 +2,6 @@ package ru.otus.hw.task;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import jakarta.annotation.PostConstruct;
 import ru.otus.hw.services.events.EventsService;
 
 import java.util.concurrent.Executors;

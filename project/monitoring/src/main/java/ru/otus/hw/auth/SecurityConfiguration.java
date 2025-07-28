@@ -24,10 +24,10 @@ import static org.springframework.security.authorization.AuthorityAuthorizationM
 @Configuration
 public class SecurityConfiguration {
 
-    final private UserDetailsService bookAppUserDetailsService;
+    final private UserDetailsService appUserDetailsService;
 
-    public SecurityConfiguration(UserDetailsService bookAppUserDetailsService) {
-        this.bookAppUserDetailsService = bookAppUserDetailsService;
+    public SecurityConfiguration(UserDetailsService appUserDetailsService) {
+        this.appUserDetailsService = appUserDetailsService;
     }
 
     @Bean

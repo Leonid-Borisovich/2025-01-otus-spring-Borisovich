@@ -3,7 +3,6 @@ package ru.otus.hw.controller.rest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.otus.hw.dto.ActionDto;
 import ru.otus.hw.dto.IncidentDto;
 import ru.otus.hw.exceptions.EntityNotFoundException;
-import ru.otus.hw.models.Action;
 import ru.otus.hw.services.IncidentService;
 import ru.otus.hw.services.ActionService;
 
@@ -44,12 +42,13 @@ public class IncidentsController {
         return incidentDtos;
     }
 
+    @PreAuthorize(" hasAnyRole('OPERATOR', 'ADMIN') ")
     @GetMapping("/api/v1/incident/{id}")
     public IncidentDto getIncident(@PathVariable(value = "id", required = true) long id) {
         return  incidentService.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-
+    @PreAuthorize(" hasAnyRole('OPERATOR', 'ADMIN') ")
     @DeleteMapping("/api/v1/incident/{id}")
     public ResponseEntity deleteIncident(@PathVariable(value = "id", required = true) long id) {
         incidentService.findById(id).orElseThrow(EntityNotFoundException::new);
@@ -71,11 +70,11 @@ public class IncidentsController {
             return null;
         ActionDto actionDto = actionService.insert(jsActionDtoDto.getActionText(), id, jsActionDtoDto.getActionTypeId());
         incidentDto.getActionDtos().add(actionDto);
-        //incidentService.
         return incidentDto;
 
     }
 
+    @PreAuthorize(" hasAnyRole('OPERATOR', 'ADMIN') ")
     @PostMapping("/api/v1/incident/")
     public IncidentDto addNewIncident(
             @Valid
