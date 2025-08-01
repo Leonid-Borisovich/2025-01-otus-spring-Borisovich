@@ -2,13 +2,13 @@ package ru.otus.hw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 
 /*
 localhost:8080
 
-localhost:8080/edit?id=1
-localhost:8080/add
 
 GET localhost:8080/actuator/health
 

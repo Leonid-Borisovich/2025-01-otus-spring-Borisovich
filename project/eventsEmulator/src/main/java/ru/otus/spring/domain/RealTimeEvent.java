@@ -4,6 +4,7 @@ package ru.otus.spring.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  {
@@ -22,9 +23,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class RealTimeEvent {
 
+    @NotBlank
     private String eventId;
     private String timestamp;
+    @NotBlank
     private String eventDescription;
+    @NotBlank
     private String channelId;
     private String channelName;
     private String comment;

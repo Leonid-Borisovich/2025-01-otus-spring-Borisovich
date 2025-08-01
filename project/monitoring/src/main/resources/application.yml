@@ -29,6 +29,9 @@ spring:
       enabled: true
       path: /h2-console
 
+  cache:
+    cache-names: acl_cache
+
 management:
   endpoints:
     web:

@@ -19,7 +19,8 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <h2.version>2.2.220</h2.version>
+<!--        <h2.version>2.2.220</h2.version>  не работает, c версии 2. исключена функция IDENTITY -->
+        <h2.version>1.4.198</h2.version>
     </properties>
 
     <dependencies>
@@ -80,6 +81,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <!-- Spring Security ACL и зависимости-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+
         <!-- For Spring Security testing -->
         <dependency>
             <groupId>org.springframework.security</groupId>

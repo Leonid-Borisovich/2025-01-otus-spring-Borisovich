@@ -1,4 +1,4 @@
-package ru.otus.hw.models.auth;
+package ru.otus.hw.security.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

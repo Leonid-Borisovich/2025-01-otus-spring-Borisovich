@@ -5,6 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -32,8 +37,6 @@ public class EventsServiceImpl implements EventsService {
     private boolean isStart = false;
     private Disposable disposable = null;
 
-    private static final String DEMO_MODE_EVENT = "Обнаружен автономер";  //"EventDescription"
-    private static final String KEEP_ALIVE = "KeepAlive"; //"Comment"
 
     @Override
     public void startEventsLoop(String host, String uri) {
@@ -107,7 +110,17 @@ public class EventsServiceImpl implements EventsService {
         }
     }
 
+    private void setupSecurityContext() {
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                new User("admin", "", Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))),
+                "",
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
     private void sendSuccess(LinkedHashMap data) {
+        setupSecurityContext(); // TODO класть 1 раз, после работы почистить
+
         RealTimeEvent realTimeEvent;
         try {
             realTimeEvent = objectMapper.convertValue(data, RealTimeEvent.class);
@@ -127,13 +140,6 @@ public class EventsServiceImpl implements EventsService {
 
         IncidentDto incidentDto = incidentService.insert(realTimeEvent.getEventDescription(), realTimeEvent.getChannelId());
         log.info(" Incident {} inserted successfull!" + incidentDto);
-//        String eventJsonString;
-//        try {
-//            eventJsonString = objectMapper.writeValueAsString(realTimeEvent);
-//        } catch (JsonProcessingException e) {
-//            log.error("Error by parsing RealTimeEvent!, {}", e.getMessage());
-//            return;
-//        }
     }
 
 }

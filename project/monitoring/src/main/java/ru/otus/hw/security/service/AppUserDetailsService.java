@@ -1,19 +1,15 @@
-package ru.otus.hw.auth;
+package ru.otus.hw.security.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.otus.hw.models.auth.Authority;
-import ru.otus.hw.models.auth.User;
+import ru.otus.hw.security.model.Authority;
+import ru.otus.hw.security.model.User;
 import ru.otus.hw.repositories.auth.UserRepository;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

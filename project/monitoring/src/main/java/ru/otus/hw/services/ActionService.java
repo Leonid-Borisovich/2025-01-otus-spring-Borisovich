@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ActionService {
 
-    List<ActionDto> findAllForBook(long bookId);
+    List<ActionDto> findAllForIncident(long bookId);
 
     ActionDto insert(String text, long incidentId, long actionTypeId);
 

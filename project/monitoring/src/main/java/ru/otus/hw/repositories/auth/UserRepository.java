@@ -1,7 +1,7 @@
 package ru.otus.hw.repositories.auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.otus.hw.models.auth.User;
+import ru.otus.hw.security.model.User;
 
 import java.util.Optional;
 
