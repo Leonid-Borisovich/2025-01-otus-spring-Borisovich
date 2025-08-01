@@ -1,6 +1,5 @@
 package ru.otus.hw.repositories;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,9 +8,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import ru.otus.hw.models.Action;
 import ru.otus.hw.models.Device;
 import ru.otus.hw.models.Incident;
+import ru.otus.hw.services.ActionServiceImpl;
 import ru.otus.hw.services.ActionTypeServiceImpl;
 import ru.otus.hw.services.IncidentServiceImpl;
 
@@ -24,7 +25,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Репозиторий на основе JPA")
 @DataJpaTest
 @ComponentScan({"ru.otus.hw.converters", "ru.otus.hw.repositories"})
-@Import({IncidentServiceImpl.class, ActionTypeServiceImpl.class})
+@Import({IncidentServiceImpl.class,
+        ActionTypeServiceImpl.class
+        })
 class JpaIncidentRepositoryTest {
 
     @Autowired
@@ -34,6 +37,9 @@ class JpaIncidentRepositoryTest {
     private IncidentRepository incidentRepository;
 
     @Autowired ActionRepository actionRepository;
+
+    @MockitoBean
+    ActionServiceImpl actionService;
 
     private List<Device> deviceExampleList;
 

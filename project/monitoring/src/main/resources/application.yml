@@ -9,12 +9,15 @@ listen:
 spring:
   datasource:
     url: jdbc:h2:mem:testdb
+#    url: jdbc:postgresql://localhost:5433/incidents_demo
+#    username: user
+#    password: user
 
   sql:
     init:
       mode: always
-#      data-locations: data.sql
-#      schema-locations: schema.sql
+      data-locations: classpath:data.sql
+      schema-locations: classpath:schema.sql
   jpa:
     open-in-view: false
     generate-ddl: false

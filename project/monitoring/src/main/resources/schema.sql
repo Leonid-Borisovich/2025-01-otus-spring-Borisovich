@@ -1,4 +1,4 @@
-create table action_types
+create table IF NOT EXISTS action_types
 (
     id      bigserial,
     name    varchar(128),
@@ -6,7 +6,7 @@ create table action_types
 );
 
 
-create table devices (
+create table IF NOT EXISTS devices (
                          id varchar(32),
                          full_name varchar(255),
                          latitude numeric(8,4),
@@ -14,14 +14,14 @@ create table devices (
                          primary key (id)
 );
 
-create table incidents (
+create table IF NOT EXISTS incidents (
                        id bigserial,
                        description varchar(255),
                        device_id varchar(32) references devices (id) on delete cascade,
                        primary key (id)
 );
 
-create table actions
+create table IF NOT EXISTS actions
 (
     id      bigserial,
     whatdo    varchar(1024),
@@ -31,14 +31,14 @@ create table actions
 );
 
 
-create table users (
+create table IF NOT EXISTS users (
                        user_id bigserial  primary key,
                        username varchar(50) not null,
                        password varchar(100) not null
 
 );
 
-create table roles (
+create table IF NOT EXISTS roles (
                        role_id bigserial,
                        role varchar(50) not null,
                        primary key (role_id)
@@ -47,7 +47,7 @@ create table roles (
 
 );
 
-CREATE TABLE user_roles (
+CREATE TABLE IF NOT EXISTS user_roles (
                             user_id BIGINT NOT NULL,
                             role_id BIGINT NOT NULL,
                             PRIMARY KEY (user_id, role_id),

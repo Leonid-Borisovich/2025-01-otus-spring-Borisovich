@@ -14,9 +14,6 @@ import java.util.List;
 @Component
 public class IncidentConverter {
     private final DeviceConverter deviceConverter;
-
-
-    private final ActionConverter actionConverter;
     private final ActionService actionService;
 
     public IncidentDto modelToDto(Incident incident) {
