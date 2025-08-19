@@ -1,0 +1,16 @@
+#server:
+#  port: 8080
+
+
+spring:
+  resources:
+    chain:
+      cache: false
+    cache:
+      cachecontrol:
+        no-cache: true
+      period: 0
+
+logging:
+  level:
+    root: info
