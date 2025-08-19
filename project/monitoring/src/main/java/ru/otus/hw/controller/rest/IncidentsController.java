@@ -3,7 +3,6 @@ package ru.otus.hw.controller.rest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,13 +62,13 @@ public class IncidentsController {
                              @PathVariable(value = "id", required = true) long id,
                              @Valid
                              @RequestBody
-                             JSActionDto jsActionDtoDto
+                             PageActionDto pageActionDtoDto
     ) {
 
         IncidentDto incidentDto =  incidentService.findById(id).orElse(null);
         if (incidentDto == null)
             return null;
-        ActionDto actionDto = actionService.insert(jsActionDtoDto.getActionText(), id, jsActionDtoDto.getActionTypeId());
+        ActionDto actionDto = actionService.insert(pageActionDtoDto.getActionText(), id, pageActionDtoDto.getActionTypeId());
         incidentDto.getActionDtos().add(actionDto);
         return incidentDto;
 
@@ -80,8 +79,8 @@ public class IncidentsController {
     public IncidentDto addNewIncident(
             @Valid
             @RequestBody
-            JSIncidentDto jsIncidentDto) {
-        IncidentDto newIncident = incidentService.insert(jsIncidentDto.getDescription(), jsIncidentDto.getDeviceId());
+            PageIncidentDto pageIncidentDto) {
+        IncidentDto newIncident = incidentService.insert(pageIncidentDto.getDescription(), pageIncidentDto.getDeviceId());
         Long newIncidentId = newIncident.getId();
         return incidentService.findById(newIncidentId).orElse(null);
     }

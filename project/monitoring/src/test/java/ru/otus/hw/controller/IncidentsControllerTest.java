@@ -9,7 +9,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.controller.rest.IncidentsController;
-import ru.otus.hw.controller.rest.JSIncidentDto;
+import ru.otus.hw.controller.rest.PageIncidentDto;
 import ru.otus.hw.dto.DeviceDto;
 import ru.otus.hw.dto.IncidentDto;
 import ru.otus.hw.dto.ActionDto;
@@ -50,14 +50,14 @@ class IncidentsControllerTest {
     @Test
     void shouldCorrectSaveNewIncident() throws Exception {
         IncidentDto expectedIncidentDto = incidentDtos.get(0);
-        JSIncidentDto jsIncidentDto = new JSIncidentDto(null,"The Description", "ID_Kamera_1", 1L, "", 1L);
+        PageIncidentDto pageIncidentDto = new PageIncidentDto(null,"The Description", "ID_Kamera_1", 1L, "", 1L);
         when(incidentService.insert("The Description", "ID_Kamera_1")).thenReturn(expectedIncidentDto);
         when(incidentService.findById(1L)).thenReturn(Optional.of(expectedIncidentDto));
 
 
         mvc.perform(post("/api/v1/incident/")
                         .contentType(APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(jsIncidentDto)))
+                        .content(mapper.writeValueAsString(pageIncidentDto)))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(expectedIncidentDto)));
     }

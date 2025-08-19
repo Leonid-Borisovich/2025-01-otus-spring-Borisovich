@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JSActionDto {
+public class PageActionDto {
 
     private String actionText;
 

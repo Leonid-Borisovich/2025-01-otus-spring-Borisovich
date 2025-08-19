@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JSIncidentDto {
+public class PageIncidentDto {
 
     private Long id;
 
@@ -22,7 +22,7 @@ public class JSIncidentDto {
 
     private Long actionTypeId;
 
-    public JSIncidentDto(Long id, String description, String deviceId) {
+    public PageIncidentDto(Long id, String description, String deviceId) {
         this.id = id;
         this.description = description;
         this.deviceId = deviceId;

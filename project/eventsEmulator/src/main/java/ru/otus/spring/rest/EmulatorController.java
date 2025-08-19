@@ -41,14 +41,14 @@ public class EmulatorController {
                 .map(t ->  {
                     LocalDateTime nowDate = LocalDateTime.now();
                     String now = FORMATTER.format(nowDate);
-                    RealTimeEvent e =  new RealTimeEvent("id_" + t.toString(),
+                    RealTimeEvent event =  new RealTimeEvent("id_" + t.toString(),
                             now,
                             String.format("Пересечение периметра %s: %s", t, now),
                             "ID_Южные_ворота",
                             "Южные ворота",
                             "Пересечение периметра на Южных воротах"
                     );
-                    return e;
+                    return event;
                 });
     }
 
