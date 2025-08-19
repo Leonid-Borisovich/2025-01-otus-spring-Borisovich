@@ -13,19 +13,19 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class DeviceServiceImpl implements DeviceService {
-    private final DeviceRepository DeviceRepository;
-    private final DeviceConverter DeviceConverter;
+    private final DeviceRepository deviceRepository;
+    private final DeviceConverter deviceConverter;
 
     @Override
     @Transactional(readOnly = true)
     public DeviceDto findById(String id) {
-        return DeviceRepository.findById(id).map(DeviceConverter::modelToDto).orElse(null);
+        return deviceRepository.findById(id).map(deviceConverter::modelToDto).orElse(null);
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public List<DeviceDto> findAll() {
-        return DeviceRepository.findAll().stream().map(DeviceConverter::modelToDto).collect(Collectors.toList());
+        return deviceRepository.findAll().stream().map(deviceConverter::modelToDto).collect(Collectors.toList());
     }
 }
